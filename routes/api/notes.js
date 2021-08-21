@@ -7,7 +7,9 @@ const auth = require('../../middleware/auth.js')
 
 notesRouter.get('/', async (req, res) => {
   try {
-    const notes = await pool.query('SELECT * FROM NOTES')
+    const notes = await pool.query(
+      'SELECT notes.note_id,notes.note_content,notes.note_important,users.user_name,users.user_email FROM NOTES JOIN USERS on Notes.user_id=USERS.user_id'
+    )
     res.json(notes.rows)
   } catch (error) {
     console.error(error.message)
