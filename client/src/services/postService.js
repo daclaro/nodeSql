@@ -18,5 +18,15 @@ const getPostService = async () => {
   //{token:"ksdlskds"}
   return response.data
 }
-const exporta = { postService, getPostService }
+const deletePostService = async (id, header) => {
+  const headers = {
+    'x-auth-token': header,
+  }
+  const response = await axios.delete(baseUrl + '/' + id, {
+    headers: headers,
+  })
+  console.log(response.data)
+  return response.data
+}
+const exporta = { postService, getPostService, deletePostService }
 export default exporta

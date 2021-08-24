@@ -3,7 +3,7 @@ import login from '../services/login.js'
 const Login = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [logged, setLogged] = useState(false)
+
   const [invalid, setInvalid] = useState(false)
   const handleEmail = (e) => {
     e.preventDefault()
@@ -18,7 +18,7 @@ const Login = (props) => {
     try {
       const token = await login({ user_email: email, user_password: password })
       props.setToken(token.token)
-      setLogged(true)
+      props.setLogged(true)
       setInvalid(false)
     } catch (error) {
       setInvalid(true)
@@ -28,7 +28,7 @@ const Login = (props) => {
     <div>
       <div>
         <div className='main-container-login'>
-          {logged ? (
+          {props.logged ? (
             <h1>Thanks for logging in</h1>
           ) : (
             <form action method='post'>

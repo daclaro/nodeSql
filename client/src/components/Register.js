@@ -5,6 +5,7 @@ const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmpw, setConfirmpw] = useState('')
+
   const handleName = (e) => {
     e.preventDefault()
     setName(e.target.value)

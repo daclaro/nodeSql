@@ -30,4 +30,16 @@ notesRouter.post('/', auth, async (req, res) => {
     console.error(error.message)
   }
 })
+notesRouter.delete('/:id', auth, async (req, res) => {
+  try {
+    const note_id = req.params.id
+    //const { user_id, note_content, note_important } = req.body
+    const newNotes = await pool.query('DELETE FROM notes WHERE note_id=$1', [
+      note_id,
+    ])
+    res.json(newNotes.rows[0])
+  } catch (error) {
+    console.error(error.message)
+  }
+})
 module.exports = notesRouter

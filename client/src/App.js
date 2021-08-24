@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
 const App = () => {
   const [token, setToken] = useState('')
+  const [logged, setLogged] = useState(false)
   return (
     <>
       <Router>
@@ -19,7 +20,7 @@ const App = () => {
           </Route>
           <Route path='/login'>
             <Navbar />
-            <Login setToken={setToken} />
+            <Login setToken={setToken} logged={logged} setLogged={setLogged} />
           </Route>
           <Route path='/register'>
             <Navbar />
