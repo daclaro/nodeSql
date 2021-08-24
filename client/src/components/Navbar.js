@@ -6,14 +6,14 @@ const Navbar = () => {
       <nav>
         <ul className='nav-container'>
           <li className='logo'>
-            <Link className='children-links' to='/ '>
+            <Link className='children-links' to='/'>
               Dev Connector
             </Link>
           </li>
           <li className='nav-children'>
-            <a href className='children-links'>
-              Developers
-            </a>
+            <Link className='children-links' to='/post'>
+              Posts
+            </Link>
           </li>
           <li className='nav-children'>
             <Link className='children-links' to='/register'>

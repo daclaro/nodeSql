@@ -6,23 +6,26 @@ import Login from './components/Login.js'
 import Post from './components/Post.js'
 import Navbar from './components/Navbar.js'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+
 const App = () => {
+  const [token, setToken] = useState('')
   return (
     <>
       <Router>
         <Switch>
+          <Route path='/post'>
+            <Navbar />
+            <Post token={token} />
+          </Route>
           <Route path='/login'>
             <Navbar />
-            <Login />
+            <Login setToken={setToken} />
           </Route>
           <Route path='/register'>
             <Navbar />
             <Register />
           </Route>
-          <Route path='/post'>
-            <Navbar />
-            <Post />
-          </Route>
+
           <Route path='/'>
             <Navbar />
             <Landing />

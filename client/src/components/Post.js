@@ -1,5 +1,24 @@
-import React from 'react'
-const Post = () => {
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import exporta from '../services/postService.js'
+const { postService, getPostService } = exporta
+const Post = (props) => {
+  const [post, setPost] = useState('')
+  const [posts, setPosts] = useState(['asa'])
+  const handlePost = (e) => {
+    e.preventDefault()
+    setPost(e.target.value)
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    postService({ note_content: post, note_important: true }, props.token)
+    setPosts(posts.concat(post))
+  }
+  useEffect(async () => {
+    const postsz = await getPostService()
+    const arrayContent = postsz.map((x) => x.note_content)
+    setPosts(arrayContent)
+  }, [])
   return (
     <div>
       <div>
@@ -15,8 +34,10 @@ const Post = () => {
               placeholder='Create a post'
               required
               defaultValue={''}
+              value={post}
+              onChange={handlePost}
             />
-            <button>Submit</button>
+            <button onClick={handleSubmit}>Submit</button>
           </form>
           <div className='post1'>
             <p>
@@ -28,6 +49,14 @@ const Post = () => {
             <p className='date'>Posted on 04/16/2019</p>
             <button>Delete</button>
           </div>
+
+          {posts.map((post) => (
+            <div className='post1'>
+              <p>{post}</p>
+              <p className='date'>Posted on 04/16/2019</p>
+              <button>Delete</button>
+            </div>
+          ))}
         </div>
       </div>
     </div>
