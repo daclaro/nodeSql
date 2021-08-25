@@ -25,7 +25,10 @@ notesRouter.post('/', auth, async (req, res) => {
       'INSERT INTO notes(user_id, note_content, note_important) VALUES ($1,$2,$3) RETURNING *',
       [user_id, note_content, note_important]
     )
-    res.json(newNotes.rows[0])
+    const newNotes2 = await pool.query(
+      'SELECT notes.note_id,notes.note_content,notes.note_important,users.user_name,users.user_email FROM NOTES JOIN USERS on Notes.user_id=USERS.user_id ORDER BY note_id DESC LIMIT 1'
+    )
+    res.json(newNotes2.rows[0])
   } catch (error) {
     console.error(error.message)
   }

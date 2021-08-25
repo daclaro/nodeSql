@@ -5,14 +5,18 @@ const { postService, getPostService, deletePostService } = exporta
 const Post = (props) => {
   const [post, setPost] = useState('')
   const [posts, setPosts] = useState([])
+  const [submit, setSubmit] = useState(false)
   const handlePost = (e) => {
     e.preventDefault()
     setPost(e.target.value)
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    postService({ note_content: post, note_important: true }, props.token)
-    setPosts(posts.concat(post))
+    const pos = await postService(
+      { note_content: post, note_important: true },
+      props.token
+    )
+    setPosts(posts.concat(Array(pos)))
   }
   const handleDelete = (i) => (e) => {
     e.preventDefault()
@@ -45,21 +49,11 @@ const Post = (props) => {
             />
             <button onClick={handleSubmit}>Submit</button>
           </form>
-          <div className='post1'>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
-              possimus corporis sunt necessitatibus! Minus nesciunt soluta
-              suscipit nobis. Amet accusamus distinctio cupiditate blanditiis
-              dolor? Illo perferendis eveniet cum cupiditate aliquam?
-            </p>
-            <p className='date'>Posted on 04/16/2019</p>
-            <button>Delete</button>
-          </div>
 
           {posts.map((post) => (
             <div className='post1' key={post.note_id}>
               <p>{post.note_content}</p>
-              <p className='date'>Posted on 04/16/2019</p>
+              <p className='date'>Posted by {post.user_email}</p>
               <button onClick={handleDelete(post.note_id)}>Delete</button>
             </div>
           ))}
